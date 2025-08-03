@@ -72,6 +72,13 @@ export async function GET(request: NextRequest) {
 // POST /api/orders - Create new order
 export async function POST(request: NextRequest) {
   try {
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      )
+    }
+
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
       return NextResponse.json(

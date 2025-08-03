@@ -12,6 +12,13 @@ export async function POST(
 ) {
   const params = await context.params
   try {
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      )
+    }
+
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
       return NextResponse.json(
