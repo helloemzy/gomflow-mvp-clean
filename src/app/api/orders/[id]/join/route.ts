@@ -8,8 +8,9 @@ const joinOrderSchema = z.object({
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const params = await context.params
   try {
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
