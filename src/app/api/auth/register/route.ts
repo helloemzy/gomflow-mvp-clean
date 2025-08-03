@@ -11,6 +11,13 @@ const registerSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    if (!supabaseAdmin) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
     const { email, password, name, is_gom = false } = registerSchema.parse(body)
     
